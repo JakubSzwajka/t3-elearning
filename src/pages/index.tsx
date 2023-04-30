@@ -2,7 +2,6 @@ import Head from "next/head";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
-import LoginLayout from "~/components/layouts/loginLayout";
 
 const Home = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
@@ -27,8 +26,6 @@ const Home = () => {
     </>
   );
 };
-
-Home.layout = LoginLayout;
 
 export default Home;
 
