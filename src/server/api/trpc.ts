@@ -58,6 +58,8 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
   });
 };
 
+export type Context = ReturnType<typeof createTRPCContext>;
+
 /**
  * 2. INITIALIZATION
  *
