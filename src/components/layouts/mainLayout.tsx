@@ -2,6 +2,7 @@ import React from "react";
 import { signOut } from "next-auth/react";
 import Footer from "../footer";
 import Header from "../header";
+import Link from "next/link";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -10,9 +11,17 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
         <nav className="flex h-full flex-col justify-between">
           <ul className="py-4">
             <li>
-              <a href="/home" className="block px-4 py-2 hover:bg-gray-200">
-                Home
-              </a>
+              <Link href="/users" className="block px-4 py-2 hover:bg-gray-200">
+                Users
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/lessons"
+                className="block px-4 py-2 hover:bg-gray-200"
+              >
+                Lessons
+              </Link>
             </li>
             {/* Add more menu items here */}
           </ul>

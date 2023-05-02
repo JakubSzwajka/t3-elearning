@@ -4,8 +4,18 @@ import type { Prisma } from "@prisma/client";
 
 export const lessonsRouter = createTRPCRouter({
   getAll: protectedProcedure.query(({ ctx }) => {
-    return ctx.prisma.lesson.findMany();
+    return ctx.prisma.lesson.findMany({
+      include: { author: true },
+    });
   }),
+  getOne: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(({ input, ctx }) => {
+      return ctx.prisma.lesson.findUnique({
+        where: { id: input.id },
+        include: { author: true },
+      });
+    }),
   create: protectedProcedure
     .input(
       z.object({

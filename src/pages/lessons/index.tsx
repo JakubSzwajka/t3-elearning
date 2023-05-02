@@ -3,6 +3,8 @@ import Divider from "~/components/divider";
 import { useState } from "react";
 import { Toast } from "~/components/toast";
 import type { RouterInputs } from "~/utils/api";
+import FileUploadForm from "~/components/fileUploadForm";
+import { useRouter } from "next/router";
 
 const LessonItem = ({
   lesson,
@@ -11,14 +13,25 @@ const LessonItem = ({
   lesson: RouterOutputs["lesson"]["getAll"][number];
   deleteAction: (data: { id: string }) => void;
 }) => {
-  const handleDelete = () => {
+  const router = useRouter();
+
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
     deleteAction({ id: lesson.id });
   };
 
+  const handleRowClick = async () => {
+    await router.push(`/lessons/${lesson.id}`);
+  };
+
   return (
-    <tr className="border-b border-gray-300">
+    <tr
+      className="cursor-pointer border-b border-gray-300"
+      onClick={() => void handleRowClick()}
+    >
       <td className="p-2">{lesson.title}</td>
       <td className="p-2">{lesson.description}</td>
+      <td className="p-2">{lesson.author.email}</td>
       <td className="p-2">
         <button
           onClick={handleDelete}
@@ -131,11 +144,14 @@ const LessonsPage = () => {
       <NewLessonForm onSubmit={createNewLesson} />
 
       <Divider />
+
+      <FileUploadForm />
       <table className="min-w-full table-auto border-collapse">
         <thead>
           <tr className="border-b border-gray-300">
             <th className="p-2 text-left font-semibold">Title</th>
             <th className="p-2 text-left font-semibold">Description</th>
+            <th className="p-2 text-left font-semibold">Author</th>
           </tr>
         </thead>
         <tbody>
